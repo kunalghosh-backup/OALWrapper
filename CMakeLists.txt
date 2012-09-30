@@ -17,7 +17,7 @@ IF(PRIVATE_LIB_DIR)
         MESSAGE(FATAL_ERROR "folder named include not found in private lib dir")
     ENDIF()
     INCLUDE_DIRECTORIES(
-        ${PRIVATE_LIB_DIR}/include}
+        ${PRIVATE_LIB_DIR}/include
     )
     FIND_LIBRARY(OGG_LIBRARY
         ogg
@@ -108,7 +108,6 @@ SET(all_sources
     sources/OAL_Init.cpp
     sources/OAL_Loaders.cpp
     sources/OAL_LoggerObject.cpp
-    sources/OAL_OggHelper.cpp
     sources/OAL_OggSample.cpp
     sources/OAL_OggStream.cpp
     sources/OAL_Playback.cpp
@@ -135,9 +134,11 @@ TARGET_LINK_LIBRARIES(OALWrapper
     SDL
 )
 
-ADD_EXECUTABLE(SimpleTest
-    tests/Simple/main.cpp
-)
-TARGET_LINK_LIBRARIES(SimpleTest
-    OALWrapper
-)
+ADD_EXECUTABLE(SimpleTest tests/Simple/main.cpp)
+TARGET_LINK_LIBRARIES(SimpleTest OALWrapper)
+
+ADD_EXECUTABLE(Playlist tests/Playlist/main.cpp)
+TARGET_LINK_LIBRARIES(Playlist OALWrapper)
+
+# Exports
+SET(OALWRAPPER_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include PARENT_SCOPE)
